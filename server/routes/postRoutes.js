@@ -7,3 +7,9 @@ import Post from "../database/models/post.js";
 dotenv.config();
 
 const router = express.Router();
+
+router.get("/api/v1/post", (req, res) => {
+  res.send("Post");
+});
+
+export default router;
