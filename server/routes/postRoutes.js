@@ -8,8 +8,8 @@ dotenv.config();
 
 const router = express.Router();
 
-router.get("/api/v1/post", (req, res) => {
-  res.send("Post");
+router.route("/").get((req, res) => {
+  res.status(200).json({ message: "Posts" });
 });
 
 export default router;
