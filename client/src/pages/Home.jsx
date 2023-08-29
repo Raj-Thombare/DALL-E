@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Card, FormField, Loader } from "../components";
 
@@ -21,7 +22,6 @@ const Home = () => {
 
         if (response.ok) {
           const result = await response.json();
-          console.log("result", result);
           setAllPosts(result.data.reverse());
         }
       } catch (error) {
