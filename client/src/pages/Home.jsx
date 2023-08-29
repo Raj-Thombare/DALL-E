@@ -3,9 +3,36 @@ import { Card, FormField, Loader } from "../components";
 
 const Home = () => {
   const [allPosts, setAllPosts] = useState(null);
-  const [loader, setLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/post", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log("result", result);
+          setAllPosts(result.data.reverse());
+        }
+      } catch (error) {
+        alert(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const RenderCards = ({ data, title }) => {
     if (data?.length > 0) {
@@ -34,7 +61,7 @@ const Home = () => {
         <FormField />
       </div>
       <div className="mt-10">
-        {loader ? (
+        {loading ? (
           <div className="flex justify-center items-center">
             <Loader />
           </div>
@@ -50,7 +77,7 @@ const Home = () => {
               {searchText ? (
                 <RenderCards data={[]} title="No search result found" />
               ) : (
-                <RenderCards data={[]} title="No posts found" />
+                <RenderCards data={allPosts} title="No posts found" />
               )}
             </div>
           </>
