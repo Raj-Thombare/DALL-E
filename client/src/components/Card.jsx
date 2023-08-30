@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { download } from "../assets";
 import { downloadImage } from "../utils";
 
