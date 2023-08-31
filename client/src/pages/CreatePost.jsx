@@ -22,9 +22,8 @@ const CreatePost = () => {
     e.preventDefault();
 
     if (form.prompt && form.photo) {
+      setLoading(true);
       try {
-        setLoading(true);
-
         const response = await fetch(
           "https://dall-e-53it.onrender.com/api/v1/post",
           {
@@ -65,8 +64,9 @@ const CreatePost = () => {
 
   const generateImage = async () => {
     if (form.prompt) {
+      setGeneratingImg(true);
+
       try {
-        setGeneratingImg(true);
         const response = await fetch(
           "https://dall-e-53it.onrender.com/api/v1/dalle",
           {
@@ -94,16 +94,16 @@ const CreatePost = () => {
   return (
     <section className="max-w-7xl mx-auto">
       <div>
-        <h1 className="font-extrabold text-[#222328] text-[32px]">
+        <h1 className="font-extrabold text-[#222328] text-[32px] text-center">
           The Community Showcase
         </h1>
-        <p className="mt-2 text-[#666e75] text-[16px] max-w-[500px]">
+        <p className="mt-2 mx-auto text-[#666e75] text-[16px] max-w-[500px] text-center">
           Create imaginative and stunning images through DALL AI and share them
           with the community
         </p>
       </div>
 
-      <form className="mt-16 max-w-3xl" onSubmit={handleSubmit}>
+      <form className="mx-auto mt-16 max-w-3xl" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-5">
           <FormField
             labelName="Name"
@@ -114,7 +114,7 @@ const CreatePost = () => {
             handleChange={handleChange}
           />
           <FormField
-            labelName="prompt"
+            labelName="Start with a detailed description"
             type="text"
             name="prompt"
             placeholder="an oil painting by Matisse of a humanoid robot playing chess"
