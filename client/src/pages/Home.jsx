@@ -111,7 +111,7 @@ const Home = () => {
                 <span className="text-[#222328]"> {searchText}</span>
               </h2>
             )}
-            <div className="grid grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-1">
               {searchText ? (
                 <RenderCards
                   data={searchedResults}
