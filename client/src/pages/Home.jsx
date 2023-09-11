@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { Card, FormField, Loader } from "../components";
+import { Card, FormField, Loader, Modal } from "../components";
+
+import { downloadImage } from "../utils";
 
 const Home = () => {
   const [allPosts, setAllPosts] = useState(null);
@@ -9,6 +11,10 @@ const Home = () => {
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [post, setPost] = useState(null);
+  const [prompt, setPrompt] = useState(null);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -60,7 +66,12 @@ const Home = () => {
       return data.map((post, index) => (
         <Card
           key={post._id}
+          _id={post._id}
           {...post}
+          setId={setId}
+          setShowModal={setShowModal}
+          setPost={setPost}
+          setPrompt={setPrompt}
           className={`${
             (index + 1) % 6 === 0
               ? "col-span-2 row-span-2"
@@ -124,6 +135,25 @@ const Home = () => {
           </>
         )}
       </div>
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+        <div className="flex justify-center items-center relative inset-0">
+          <div className="w-full md:w-[480px] m-3 bg-white rounded-t-[14px] rounded-b-[14px]">
+            <img src={post} className="rounded-t-[14px]" />
+            <div className="mx-10 mt-6 mb-10 flex flex-col items-center text-sm gap-6">
+              <h4 className="text-base text-center mx-auto mt-3">{prompt}</h4>
+              <div className="mt-3 flex w-full cursor-pointer">
+                <button
+                  type="button"
+                  onClick={() => downloadImage(id, post)}
+                  className="grow shrink basis-0 bg-[#ececf1] inline-flex relative pointer-events-auto justify-center transition-all m-0 px-5 py-4 rounded-md hover:opacity-75"
+                >
+                  <span className="font-semibold">Download for free</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </section>
   );
 };

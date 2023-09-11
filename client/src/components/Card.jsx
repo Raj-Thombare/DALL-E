@@ -1,39 +1,33 @@
 /* eslint-disable react/prop-types */
-import { download } from "../assets";
-import { downloadImage } from "../utils";
 
-const Card = ({ _id, name, prompt, photo, className }) => {
+const Card = ({
+  _id,
+  setId,
+  prompt,
+  photo,
+  className,
+  setShowModal,
+  setPost,
+  setPrompt,
+}) => {
+  const imgModalHandler = (photo, prompt, _id) => {
+    setId(_id);
+    setPost(photo);
+    setShowModal(true);
+    setPrompt(prompt);
+  };
+
   return (
     <div
-      className={`rounded-xl group relative shadow-card hover:shadow-cardhover card ${className}`}
+      onClick={() => imgModalHandler(photo, prompt, _id)}
+      className={`group relative shadow-card hover:shadow-cardhover hover:cursor-pointer rounded-xl card ${className}`}
     >
-      <img
-        className="w-full h-auto object-cover rounded-xl"
-        src={photo}
-        alt={prompt}
-      />
-      <div className="group-hover:flex flex-col max-h-[94.5%] hidden absolute bottom-0 left-0 right-0 bg-[#10131f] m-2 p-4 rounded-md">
-        <p className="text-white text-sm overflow-y-auto prompt">{prompt}</p>
-
-        <div className="mt-5 flex justify-between items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full object-cover bg-green-700 flex justify-center items-center text-white text-xs font-bold">
-              {name[0]}
-            </div>
-            <p className="text-white text-sm">{name}</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => downloadImage(_id, photo)}
-            className="outline-none bg-transparent border-none"
-          >
-            <img
-              src={download}
-              alt="download"
-              className="w-6 h-6 object-contain invert"
-            />
-          </button>
-        </div>
+      <img className="w-full h-auto object-cover" src={photo} alt={prompt} />
+      <div className="group-hover:flex flex-col p-5 justify-between w-full h-full hidden absolute top-0 left-0 group-hover:bg-[#fafafcf2] group-hover:opacity-100 group-hover:transition duration-200 delay-0 ease-in-out">
+        <h4 className="text-black text-lg overflow-y-auto font-serif">
+          {prompt}
+        </h4>
+        <div className="text-[#777] text-base">Click to try</div>
       </div>
     </div>
   );
