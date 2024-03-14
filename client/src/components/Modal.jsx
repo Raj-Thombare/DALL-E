@@ -3,7 +3,6 @@ const Modal = ({ isVisible, onClose, children }) => {
   if (!isVisible) return null;
 
   const handleClose = (e) => {
-    console.log("handleClose");
     if (e.target.id === "wrapper") onClose();
   };
 

@@ -32,7 +32,7 @@ const CreatePost = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(form),
-          }
+          },
         );
 
         await response.json();
@@ -75,7 +75,7 @@ const CreatePost = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ prompt: form.prompt }),
-          }
+          },
         );
 
         const data = await response.json();
